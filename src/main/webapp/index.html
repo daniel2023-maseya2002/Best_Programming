@@ -18,7 +18,6 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            margin: 0;
         }
 
         .container {
@@ -51,7 +50,7 @@
             width: 100%;
         }
 
-        .container input {
+        .container input, .container select {
             width: calc(100% - 30px);
             margin-bottom: 15px;
             padding: 10px;
@@ -87,13 +86,20 @@
 <body>
     <div class="container">
         <h1>Welcome to User Info Page</h1>
-        <form id="userInfoForm" action="displayInfo" method="post" onsubmit="return validateForm()">
+        <form id="userInfoForm" action="/UseForm/displayInfo" method="post" onsubmit="return validateForm()">
             <label for="id">ID:</label>
-            <input type="text" id="id" name="id" required><br><br>
+            <input type="text" id="id" name="id" required>
             <label for="firstName">First Name:</label>
-            <input type="text" id="firstName" name="firstName" required><br><br>
+            <input type="text" id="firstName" name="firstName" required>
             <label for="lastName">Last Name:</label>
-            <input type="text" id="lastName" name="lastName" required><br><br>
+            <input type="text" id="lastName" name="lastName" required>
+            <label for="action">Action:</label>
+            <select id="action" name="action">
+                <option value="create">Create</option>
+                <option value="retrieve">Retrieve</option>
+                <option value="update">Update</option>
+                <option value="delete">Delete</option>
+            </select>
             <button type="submit">Submit</button>
         </form>
         <footer>
@@ -106,23 +112,24 @@
             var id = document.getElementById('id').value;
             var firstName = document.getElementById('firstName').value;
             var lastName = document.getElementById('lastName').value;
+            var action = document.getElementById('action').value;
 
             if (id.trim() === '') {
                 alert('Please enter ID');
                 return false;
             }
 
-            if (firstName.trim() === '') {
-                alert('Please enter First Name');
-                return false;
-            }
+            if (action !== 'retrieve' && action !== 'delete') {
+                if (firstName.trim() === '') {
+                    alert('Please enter First Name');
+                    return false;
+                }
 
-            if (lastName.trim() === '') {
-                alert('Please enter Last Name');
-                return false;
+                if (lastName.trim() === '') {
+                    alert('Please enter Last Name');
+                    return false;
+                }
             }
-
-            // You can add more specific validations as needed
 
             return true;
         }
